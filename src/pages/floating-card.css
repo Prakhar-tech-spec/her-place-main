@@ -1,0 +1,23 @@
+@keyframes float-random {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(10px, -8px); }
+  20% { transform: translate(18px, 4px); }
+  30% { transform: translate(8px, 16px); }
+  40% { transform: translate(-6px, 10px); }
+  50% { transform: translate(-14px, 0); }
+  60% { transform: translate(-8px, -12px); }
+  70% { transform: translate(4px, -18px); }
+  80% { transform: translate(16px, -10px); }
+  90% { transform: translate(8px, 4px); }
+  100% { transform: translate(0, 0); }
+}
+
+.floating-card {
+  animation: float-random 18s linear infinite, fadeInUp 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 40;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+} 

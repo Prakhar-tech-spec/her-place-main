@@ -1,0 +1,22 @@
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.floating-card {
+  animation: float 3s ease-in-out infinite, fadeInUp 1s ease;
+  z-index: 40;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.arrow-btn {
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.arrow-btn:hover {
+  transform: translate(8px, -8px);
+}
