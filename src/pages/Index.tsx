@@ -3,6 +3,7 @@ import NavLinks from "@/components/NavLinks";
 import { Menu } from "lucide-react";
 import React from "react";
 import "./floating-card.css";
+import { motion, AnimatePresence } from "framer-motion";
 
 const skills = ["web design", "ui/ux design", "databases", "business cards"];
 const services = [
@@ -56,67 +57,121 @@ const reviews = [
   }
 ];
 
+const AnimatedMenuButton = ({ open, onClick, inMenu = false }: { open: boolean, onClick: () => void, inMenu?: boolean }) => (
+  <button
+    aria-label={open ? 'Close main menu' : 'Open main menu'}
+    className={`p-2 rounded-full transition focus:outline-none flex flex-col justify-center items-center w-10 h-10 group z-50 ${inMenu ? '' : 'ml-2'}`}
+    onClick={onClick}
+    style={inMenu ? { position: 'absolute', top: 18, right: 18 } : {}}
+  >
+    <span
+      className={`block h-0.5 w-7 bg-black rounded transition-all duration-300 ease-in-out ${open ? 'rotate-45 translate-y-2' : ''}`}
+      style={{ transition: 'all 0.3s cubic-bezier(.4,0,.2,1)' }}
+    ></span>
+    <span
+      className={`block h-0.5 w-7 bg-black rounded transition-all duration-300 ease-in-out my-1 ${open ? 'opacity-0' : ''}`}
+      style={{ transition: 'all 0.3s cubic-bezier(.4,0,.2,1)' }}
+    ></span>
+    <span
+      className={`block h-0.5 w-7 bg-black rounded transition-all duration-300 ease-in-out ${open ? '-rotate-45 -translate-y-2' : ''}`}
+      style={{ transition: 'all 0.3s cubic-bezier(.4,0,.2,1)' }}
+    ></span>
+  </button>
+);
+
 const Index = () => {
   const [open, setOpen] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
   const [currentReview, setCurrentReview] = React.useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   return (
     <div className="min-h-screen bg-white flex flex-col w-full overflow-x-hidden" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
       {/* Main colored area with white border */}
-      <div className="bg-white m-2 mt-4 rounded-3xl">
+      <div className="bg-white m-2 mt-4 rounded-xl md:rounded-3xl">
         {/* Header/Nav */}
-        <div className="[background-color:#aec3c3] py-2 md:py-3 lg:py-4 shadow rounded-t-[2.5rem] w-full">
+        <div className="[background-color:#aec3c3] py-2 md:py-3 lg:py-4 shadow rounded-t-xl md:rounded-t-[2.5rem] w-full">
           <nav className="grid grid-cols-[auto_1fr_auto] items-center relative w-full" style={{ gridTemplateColumns: "auto 1fr auto" }}>
             <span className="text-xl md:text-2xl font-bold text-black drop-shadow-sm ml-4 md:ml-8 col-start-1 row-start-1">HerPlace</span>
           <div className="hidden md:flex justify-center col-start-2 row-start-1">
             <NavLinks />
           </div>
-          <div className="flex items-center gap-2 md:gap-4 col-start-3 row-start-1 pr-2 md:pr-4">
+          <div className="flex flex-row items-center gap-2 md:gap-4 col-start-3 row-start-1 pr-2 md:pr-4">
               <button 
-                className="border border-black text-black font-medium px-6 py-1.5 md:px-7 md:py-2 rounded-full text-base md:text-lg shadow-none bg-[#aec3c3] hover:bg-black hover:text-white transition-all duration-300 relative z-50 pointer-events-auto"
+                className="border border-black text-black font-medium px-3 py-1 rounded-full text-sm shadow-none bg-[#aec3c3] transition-all duration-300 relative z-50 pointer-events-auto md:px-7 md:py-2 md:text-lg md:hover:bg-black md:hover:text-white md:active:bg-black md:active:text-white md:focus:bg-black md:focus:text-white focus:outline-none active:bg-[#aec3c3] active:text-black focus:bg-[#aec3c3] focus:text-black"
                 style={{ 
                   position: 'relative',
                   zIndex: 9999,
                   pointerEvents: 'auto'
                 }}
-                onMouseEnter={(e) => {
+                onMouseEnter={window.innerWidth >= 768 ? (e) => {
                   e.currentTarget.style.backgroundColor = 'black';
                   e.currentTarget.style.color = 'white';
-                }}
-                onMouseLeave={(e) => {
+                } : undefined}
+                onMouseLeave={window.innerWidth >= 768 ? (e) => {
                   e.currentTarget.style.backgroundColor = '#aec3c3';
                   e.currentTarget.style.color = 'black';
-                }}
+                } : undefined}
             >
               Log in
               </button>
               <button 
-                className="bg-black text-white font-semibold px-6 py-1.5 md:px-7 md:py-2 rounded-full text-base md:text-lg border border-black hover:bg-[#aec3c3] hover:text-black transition-all duration-300 relative z-50 pointer-events-auto"
+                className="bg-black text-white font-semibold px-3 py-1 rounded-full text-sm border border-black transition-all duration-300 relative z-50 pointer-events-auto md:px-7 md:py-2 md:text-lg md:hover:bg-[#aec3c3] md:hover:text-black md:active:bg-[#aec3c3] md:active:text-black md:focus:bg-[#aec3c3] md:focus:text-black focus:outline-none active:bg-black active:text-white focus:bg-black focus:text-white"
                 style={{ 
                   position: 'relative',
                   zIndex: 9999,
                   pointerEvents: 'auto'
                 }}
-                onMouseEnter={(e) => {
+                onMouseEnter={window.innerWidth >= 768 ? (e) => {
                   e.currentTarget.style.backgroundColor = '#aec3c3';
                   e.currentTarget.style.color = 'black';
-                }}
-                onMouseLeave={(e) => {
+                } : undefined}
+                onMouseLeave={window.innerWidth >= 768 ? (e) => {
                   e.currentTarget.style.backgroundColor = 'black';
                   e.currentTarget.style.color = 'white';
-                }}
+                } : undefined}
               id="joinus-btn"
             >
               Join us
               </button>
-            <div className="flex md:hidden">
-                <button aria-label="Open main menu" className="ml-2 p-2 rounded-full hover:bg-black/10 transition"><Menu size={28} /></button>
+            <div className="flex md:hidden items-center">
+                <AnimatedMenuButton open={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
             </div>
           </div>
         </nav>
+        {/* Mobile Dropdown Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 z-50 flex items-start justify-end md:hidden bg-black/20"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: -40, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -40, scale: 0.98 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                className="mt-4 mr-4 rounded-3xl shadow-2xl border border-white/30 backdrop-blur-xl bg-white/60 w-64 max-w-[90vw] p-6 flex flex-col gap-4 relative"
+                style={{
+                  backdropFilter: 'blur(18px)',
+                  WebkitBackdropFilter: 'blur(18px)',
+                  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.18)'
+                }}
+                onClick={e => e.stopPropagation()}
+              >
+                <AnimatedMenuButton open={true} onClick={() => setMobileMenuOpen(false)} inMenu />
+                <div className="mt-12" />
+                <NavLinks onClick={() => setMobileMenuOpen(false)} />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
         {/* Hero Section */}
-        <div className="relative [background-color:#aec3c3] rounded-b-[2.5rem] overflow-visible min-h-[420px] pb-24 w-full px-0">
+        <div className="relative [background-color:#aec3c3] rounded-b-xl md:rounded-b-[2.5rem] overflow-visible min-h-[420px] pb-24 w-full px-0">
           <div className="w-full flex flex-col pt-8 md:pt-12 lg:pt-16">
             <div className="w-full flex items-center px-2 sm:px-4 md:px-6 lg:px-8 relative">
             <div className="w-full overflow-hidden">
